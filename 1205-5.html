@@ -1,0 +1,149 @@
+<p>
+	<meta charset="utf-8">
+	<title>彈跳刮刮卡</title>
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</p>
+
+<p>
+	<style>
+		/* 手機滿版Description開始 */
+		
+		@media all and (min-width: 100px) and (max-width: 800px) {
+			img {
+				max-width: 1200px;
+				vertical-align: middle;
+				padding-bottom: 0px;
+			}
+		}
+		
+		@media all and (min-width: 800px) and (max-width: 1200px) {
+			img {
+				vertical-align: middle;
+				padding-bottom: 0px;
+			}
+		}
+		/* 手機滿版Description結束 */
+		/* 說明文字的css */
+		
+		.words {
+			color: #fff;
+			line-height: 30px;
+			text-align: left;
+			font-family: '微軟正黑體';
+			font-size: 13pt;
+			position: relative;
+			top: 20px;
+			left: 0px;
+			background-color: #333A54;
+			width: 1300px;
+		}
+
+	</style>
+	<canvas>
+		<br>
+	</canvas><script>
+(function(bodyStyle) {
+bodyStyle.mozUserSelect = 'none';
+bodyStyle.webkitUserSelect = 'none';
+  
+var img = new Image();
+var canvas = document.querySelector('canvas');
+canvas.style.backgroundColor='transparent';
+canvas.style.position = 'absolute';
+  
+img.addEventListener('load', function(e) {
+var ctx;
+var w = img.width,
+h = img.height;
+var offsetX = canvas.offsetLeft,
+offsetY = canvas.offsetTop;
+var mousedown = false;
+  
+function layer(ctx) {            
+  
+var img=document.getElementById("lamp");
+var pat=ctx.createPattern(img,"repeat");                
+  
+ctx.fillStyle = pat;
+ctx.fillRect(0, 0, w, h);
+}
+  
+function eventDown(e){
+e.preventDefault();
+mousedown=true;
+}
+  
+function eventUp(e){
+    e.preventDefault();
+    mousedown = false;
+     
+
+    var data = ctx.getImageData(0,0,w,h).data;  
+     
+    for(var i=0,j=0;i<data.length;i+=4){
+        if(data[i] && data[i+1] && data[i+2] && data[i+3]){
+            j++;
+        }
+    }
+    //当图层被擦除剩余80%时触发
+    if(j<=w*h*0.8){
+        ctx.clearRect(0,0,w,h);
+    }
+}
+  
+function eventMove(e){
+e.preventDefault();
+if(mousedown) {
+if(e.changedTouches){
+e=e.changedTouches[e.changedTouches.length-1];
+}
+var x = (e.clientX + document.body.scrollLeft || e.pageX) - offsetX || 0,
+y = (e.clientY + document.body.scrollTop || e.pageY) - offsetY || 0;
+with(ctx) {
+beginPath()
+arc(x, y, 35, 0, Math.PI * 2);//括的大小++++++++++++++++++++++++括的大小+手機版960+電腦版30++++++++++
+fill();
+}
+}
+}
+  
+canvas.width=w;
+canvas.height=h;
+canvas.style.backgroundImage='url('+img.src+')';
+ctx=canvas.getContext('2d');
+ctx.fillStyle='transparent';
+ctx.fillRect(0, 0, w, h);
+layer(ctx);
+  
+ctx.globalCompositeOperation = 'destination-out';
+  
+canvas.addEventListener('touchstart', eventDown);
+canvas.addEventListener('touchend', eventUp);
+canvas.addEventListener('touchmove', eventMove);
+canvas.addEventListener('mousedown', eventDown);
+canvas.addEventListener('mouseup', eventUp);
+canvas.addEventListener('mousemove', eventMove);
+});
+img.src = 'https://pic.catworld.com.tw/web-pic/home/1204-codejump-B2.gif';//底圖~底圖~底圖~
+})(document.body.style);
+
+window.addEventListener("resize", resizeCanvas, false);
+
+
+  </script></p>
+
+
+<!--刮完的圖片 -->
+
+<img src="https://pic.catworld.com.tw/web-pic/home/1204-codejump-B1.gif" width="422" usemap="#lampMap" class="fr-fic fr-dii" id="lamp" border="0">
+<p></p>
+<center>
+<a href="https://lihi1.com/HeSoK" target="new">
+<img src="https://pic.catworld.com.tw/web-pic/home/shop.png">
+</a>
+</center>
+<!--說明文字 -->
+
